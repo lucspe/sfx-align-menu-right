@@ -103,6 +103,10 @@ final class SFX_Align_Menu_Right {
 	 */
 	public $post_types = array();
 	// Post Types - End
+
+
+	private $enableAlignMenuRight;
+
 	/**
 	 * Constructor function.
 	 * @access  public
@@ -130,52 +134,98 @@ final class SFX_Align_Menu_Right {
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
+
+		$this->enableAlignMenuRight = get_option('sfx-align-menu-right', '0') == '1';
+
 		add_action('init', array($this, 'align_menu_right'));
 
 		add_action('wp_head', array($this, 'option_css'));
+
+
+		add_action('customize_register', array($this, 'customize_register'));
+
 
 	} // End __construct()
 
 
 	public function align_menu_right() {
-		remove_action('storefront_header', 'storefront_secondary_navigation', 30);
-		remove_action('storefront_header', 'storefront_primary_navigation', 50);
-		add_action('storefront_header', 'storefront_primary_navigation', 30);
 
-		remove_action('storefront_header', 'storefront_header_cart', 60);
-		add_action('storefront_header', 'storefront_header_cart', 35);
+		if ($this->enableAlignMenuRight) {
+			remove_action('storefront_header', 'storefront_secondary_navigation', 30);
+			remove_action('storefront_header', 'storefront_primary_navigation', 50);
+			add_action('storefront_header', 'storefront_primary_navigation', 30);
 
-		remove_action('storefront_header', 'storefront_product_search', 40);
-//		* @hooked storefront_primary_navigation - 50
-//		* @hooked storefront_header_cart - 60
+			remove_action('storefront_header', 'storefront_header_cart', 60);
+
+			if (function_exists('Storefront_WooCommerce_Customiser')) {
+				$header_cart = get_theme_mod('swc_header_cart');
+				if (false == $header_cart) {
+					// don't add back the cart
+				} else {
+					add_action('storefront_header', 'storefront_header_cart', 35);
+				}
+			} else {
+				add_action('storefront_header', 'storefront_header_cart', 35);
+			}
+
+
+			remove_action('storefront_header', 'storefront_product_search', 40);
+//			* @hooked storefront_primary_navigation - 50
+//			* @hooked storefront_header_cart - 60
+		}
+	}
+
+	public function customize_register(WP_Customize_Manager $customizeManager) {
+		$customizeManager->add_setting('sfx-align-menu-right', array(
+			'default' => false,
+			'type' => 'option'
+		));
+
+		$customizeManager->add_control(new WP_Customize_Control($customizeManager, 'sfx-align-menu-right', array(
+			'type' => 'checkbox',
+			'label' => 'Align menu right of logo',
+			'description' => 'Moves the primary menu to the right of the logo and removes secondary menu',
+			'settings' => 'sfx-align-menu-right',
+			'default' => false,
+			'section' => 'header_image',
+			'priority' => 100
+		)));
 	}
 
 	public function option_css() {
 
-		$css = '';
 
-		$css .= "@media screen and (min-width: 768px) {\n";
+		if ($this->enableAlignMenuRight) {
+			$css = '';
 
-		$css .= ".menu-main-container, #menu-main { display: inline-block; }\n";
+			$css .= "@media screen and (min-width: 768px) {\n";
 
-		$css .= "#site-navigation {\n";
-		$css .= "\t" . "float: none; width: auto; display: inline-block; margin-right: 0;\n";
-		$css .= "}\n";
+			$css .= ".menu-main-container, #menu-main { display: inline-block; }\n";
 
-		$css .= ".main-navigation ul.menu > li > a, .main-navigation ul.nav-menu > li > a {\n";
-		$css .= "\t" . "padding-bottom: 0;\n";
-		$css .= "}\n";
+			$css .= "#site-navigation {\n";
+			$css .= "\t" . "float: none; width: auto; display: inline-block; margin-right: 0;\n";
+			$css .= "}\n";
+
+			$css .= ".main-navigation ul.menu > li > a, .main-navigation ul.nav-menu > li > a {\n";
+			$css .= "\t" . "padding-bottom: 0;\n";
+			$css .= "}\n";
 
 
-		$css .= ".site-header-cart .cart-contents {\n";
-		$css .= "\t" . "padding-bottom: 0;\n";
-		$css .= "}\n";
+			$css .= ".site-header-cart .cart-contents {\n";
+			$css .= "\t" . "padding-bottom: 0;\n";
+			$css .= "}\n";
 
-		$css .= "}\n";
+			// for Storefront WooCommerce Extension
+			$css .= ".site-header-cart {\n";
+			$css .= "\t" . "float: none; display: inline-block;\n";
+			$css .= "}\n";
 
-		echo "<style>\n";
-		echo $css;
-		echo "</style>\n";
+			$css .= "}\n";
+
+			echo "<style>\n";
+			echo $css;
+			echo "</style>\n";
+		}
 	}
 
 	/**

@@ -132,21 +132,22 @@ final class SFX_Align_Menu_Right {
 		// Post Types - End
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+		add_action('init', array( $this, 'load_plugin_textdomain' ));
 
+		// needs to be hooked to 'wp_loaded', since this is the action that when executed, will filter get_option from customizer
+		add_action('wp_loaded', array($this, 'get_options'), 100);
 
-		$this->enableAlignMenuRight = get_option('sfx-align-menu-right', '0') == '1';
-
-		add_action('init', array($this, 'align_menu_right'));
+		add_action('wp_loaded', array($this, 'align_menu_right'), 120);
 
 		add_action('wp_head', array($this, 'option_css'));
 
-
 		add_action('customize_register', array($this, 'customize_register'));
-
 
 	} // End __construct()
 
+	public function get_options() {
+		$this->enableAlignMenuRight = get_option('sfx-align-menu-right', '0') == true;
+	}
 
 	public function align_menu_right() {
 
@@ -216,8 +217,14 @@ final class SFX_Align_Menu_Right {
 			$css .= "}\n";
 
 			// for Storefront WooCommerce Extension
-			$css .= ".site-header-cart {\n";
+			$css .= ".woocommerce-active .site-header .site-header-cart {\n";
 			$css .= "\t" . "float: none; display: inline-block;\n";
+			$css .= "}\n";
+
+			// if cart link has no text, only a cart icon, as in demo
+			// the link is 0 height, causing the cart link to be lower than nav, fix it
+			$css .= ".woocommerce-active .site-header .site-header-cart .cart-contents {\n";
+			$css .= "\t" . "height: 1em;\n";
 			$css .= "}\n";
 
 			$css .= "}\n";

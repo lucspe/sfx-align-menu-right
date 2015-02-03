@@ -156,19 +156,20 @@ final class SFX_Align_Menu_Right {
 			remove_action('storefront_header', 'storefront_primary_navigation', 50);
 			add_action('storefront_header', 'storefront_primary_navigation', 30);
 
-			remove_action('storefront_header', 'storefront_header_cart', 60);
+			if (function_exists('storefront_header_cart')) {
+				remove_action('storefront_header', 'storefront_header_cart', 60);
 
-			if (function_exists('Storefront_WooCommerce_Customiser')) {
-				$header_cart = get_theme_mod('swc_header_cart');
-				if (false == $header_cart) {
-					// don't add back the cart
+				if (function_exists('Storefront_WooCommerce_Customiser')) {
+					$header_cart = get_theme_mod('swc_header_cart');
+					if (false == $header_cart) {
+						// don't add back the cart
+					} else {
+						add_action('storefront_header', 'storefront_header_cart', 35);
+					}
 				} else {
 					add_action('storefront_header', 'storefront_header_cart', 35);
 				}
-			} else {
-				add_action('storefront_header', 'storefront_header_cart', 35);
 			}
-
 
 			remove_action('storefront_header', 'storefront_product_search', 40);
 //			* @hooked storefront_primary_navigation - 50

@@ -1,28 +1,24 @@
-=== Starter Plugin ===
+=== Storefront Align Menu Right ===
 Contributors:
 Donate link:
 Tags:
 Requires at least: 4.0.0
-Tested up to: 4.0.0
+Tested up to: 4.1
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Hey there! I'm your new starter plugin.
-
 == Description ==
 
-Hey there! I'm your new starter plugin.
-
-Looking for a helping hand? [View plugin documentation](http://domain.com/).
+This plugin gives you an option under the Header settings in Storefront to align the primary navigation to the right of the logo.
 
 == Usage ==
 
-Place some text here, explaining how to use this plugin. Keep it clear and easy to read (short sentences).
+Once installed and activated, go to the WordPress customizer (Appearance > Customize) and under the section 'Header' in Storefront you will find a checkbox option for 'Align menu right'.
 
 == Installation ==
 
-Installing "Starter Plugin" can be done either by searching for "Starter Plugin" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Installing "Storefront Align Menu Right" can be done either by searching for "Storefront Align Menu Right" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
 1. Download the plugin via WordPress.org.
 1. Upload the ZIP file through the "Plugins > Add New > Upload" screen in your WordPress dashboard.
@@ -33,21 +29,21 @@ Installing "Starter Plugin" can be done either by searching for "Starter Plugin"
 
 = How do I contribute? =
 
-We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](http://github.com/mattyza/starter-plugin/).
+We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](http://github.com/pootlepress/sfx-align-menu-right).
 
 == Screenshots ==
 
-1. The settings screen.
+1. Align menu right option in the WordPress customizer
 
 
 == Upgrade Notice ==
 
 = 1.0.0 =
-* XXXX-XX-XX
+* 2015-02-05
 * Initial release. Woo!
 
 == Changelog ==
 
 = 1.0.0 =
-* XXXX-XX-XX
+* 2015-02-05
 * Initial release. Woo!

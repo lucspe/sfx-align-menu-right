@@ -228,6 +228,10 @@ final class SFX_Align_Menu_Right {
 			$css .= "\t" . "height: 1em;\n";
 			$css .= "}\n";
 
+			// if Jetpack site logo is used, add space under the logo,
+			// the same space under the nav when not aligned right
+			$css .= "#masthead > .col-full > .site-logo-link { padding-bottom: 2.224em; }\n";
+
 			$css .= "}\n";
 
 			echo "<style>\n";

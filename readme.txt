@@ -40,6 +40,8 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 1. Align menu right option in the WordPress customizer
 
+2. Option in the WordPress Customizer
+
 
 == Upgrade Notice ==
 

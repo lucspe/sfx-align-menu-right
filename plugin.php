@@ -139,14 +139,19 @@ final class SFX_Align_Menu_Right {
 
 		add_action('wp_loaded', array($this, 'align_menu_right'), 120);
 
-		add_action('wp_head', array($this, 'option_css'));
+		add_action('wp_head', array($this, 'option_css'), 150);
 
 		add_action('customize_register', array($this, 'customize_register'));
 
 	} // End __construct()
 
 	public function get_options() {
-		$this->enableAlignMenuRight = get_option('sfx-align-menu-right', '0') == true;
+		$arr = get_option('sfx-align-menu-right', array('checked' => false));
+		if (is_array($arr) && isset($arr['checked'])) {
+			$this->enableAlignMenuRight = $arr['checked'] == true;
+		} else {
+			$this->enableAlignMenuRight = false;
+		}
 	}
 
 	public function align_menu_right() {
@@ -178,17 +183,20 @@ final class SFX_Align_Menu_Right {
 	}
 
 	public function customize_register(WP_Customize_Manager $customizeManager) {
-		$customizeManager->add_setting('sfx-align-menu-right', array(
+
+		// use 'checked' bool in an array,
+		// so WP_CustomizeSetting will add filter to 'option_' properly
+		$customizeManager->add_setting('sfx-align-menu-right[checked]', array(
 			'default' => false,
-			'type' => 'option'
+			'type' => 'option',
 		));
 
 		$customizeManager->add_control(new WP_Customize_Control($customizeManager, 'sfx-align-menu-right', array(
 			'type' => 'checkbox',
 			'label' => 'Align menu right of logo',
 			'description' => 'Moves the primary menu to the right of the logo and removes secondary menu',
-			'settings' => 'sfx-align-menu-right',
-			'default' => false,
+			'settings' => 'sfx-align-menu-right[checked]',
+			'default' => '0',
 			'section' => 'header_image',
 			'priority' => 100
 		)));

@@ -229,7 +229,7 @@ final class SFX_Align_Menu_Right {
 			$css .= ".menu-main-container, #menu-main { display: inline-block; }\n";
 
 			$css .= "#site-navigation {\n";
-			$css .= "\t" . "float: none; width: auto; display: inline-block; margin-right: 0;\n";
+			$css .= "\t" . "float: none; width: auto; display: inline-block; margin-right: 0; padding-top: 0.5em; \n";
 			$css .= "}\n";
 
 			$css .= ".main-navigation ul.menu > li > a, .main-navigation ul.nav-menu > li > a {\n";

@@ -209,8 +209,8 @@ final class SFX_Align_Menu_Right {
 
 		$customizeManager->add_control(new WP_Customize_Control($customizeManager, 'sfx-align-menu-right', array(
 			'type' => 'checkbox',
-			'label' => 'Align menu right of logo',
-			'description' => 'Moves the primary menu to the right of the logo and removes secondary menu',
+			'label' => __('Align menu right of logo', 'sfx-align-menu-right'),
+			'description' => __('Moves the primary menu to the right of the logo and removes secondary menu', 'sfx-align-menu-right'),
 			'settings' => 'sfx-align-menu-right[checked]',
 			'default' => '0',
 			'section' => 'header_image',
